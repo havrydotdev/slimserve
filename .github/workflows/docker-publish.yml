@@ -1,0 +1,14 @@
+name: Publish docker image
+
+on: push
+
+jobs:
+  build_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build and push image
+        run: |
+          docker login --username havrydotdev --password ${{ secrets.GH_PAT }} ghcr.io
+          docker build . --tag ghcr.io/havrydotdev/slimserve:latest
+          docker push ghcr.io/havrydotdev/slimserve:latest
